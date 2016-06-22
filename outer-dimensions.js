@@ -1,7 +1,7 @@
 (function() {
 
 // Note: box-sizing: border-box; doesn't seem to affect results as
-// offset{Height,Width} already accounts for this.
+// offset{Height,Width} already accounts for them.
 
 /**
  * @param {!HTMLElement} el
@@ -9,7 +9,7 @@
  */
 function getHeight(el, style) {
   return el.offsetHeight
-      // These are accounted for by offsetWidth.
+      // These are accounted for by offsetHeight.
       // + parseFloat(style.borderTopWidth)
       // + parseFloat(style.borderBottomWidth)
       + parseFloat(style.marginTop)
@@ -22,6 +22,7 @@ function getHeight(el, style) {
  */
 function getWidth(el, style) {
   return el.offsetWidth
+      // These are accounted for by offsetWidth.
       // + parseFloat(style.borderLeftWidth)
       // + parseFloat(style.borderRightWidth)
       + parseFloat(style.marginLeft)
@@ -37,6 +38,9 @@ function hasDimensions(el) {
 }
 
 Object.defineProperties(HTMLElement.prototype, {
+  /**
+   * @return {Object<height, width>} Total outerj dimensions (including margins).
+   */
   outerDimensions: {
     get: function() {
       if (!hasDimensions(this))
@@ -50,12 +54,18 @@ Object.defineProperties(HTMLElement.prototype, {
     },
   },
 
+  /**
+   * @return {number} Total outer vertical dimension (including margins).
+   */
   outerHeight: {
     get: function() {
       return hasDimensions(this) ? getHeight(this, getComputedStyle(this)) : 0;
     },
   },
 
+  /**
+   * @return {number} Total outer horizontal dimension (including margins).
+   */
   outerWidth: {
     get: function() {
       return hasDimensions(this) ? getWidth(this, getComputedStyle(this)) : 0;
