@@ -39,7 +39,7 @@ function hasDimensions(el) {
 
 Object.defineProperties(HTMLElement.prototype, {
   /**
-   * @return {Object<height, width>} Total outer dimensions (including margins).
+   * @return {!{height: number, width: number}} Total outer dimensions (including margins).
    */
   outerDimensions: {
     get: function() {
